@@ -32,7 +32,7 @@
         <p> Name: {{githubCtrl.oneRepoData.name}}</p>
         <p ng-repeat="branch in githubCtrl.branches"><a href='' ng-click="githubCtrl.getBranchContents(githubCtrl.oneRepoData.name)">{{branch.name}}</a></p>
         <p ng-repeat="content in githubCtrl.branchContents"><a href='' ng-click="githubCtrl.getContents(content.git_url)" >{{content.name}}</a></p>
-        <p ng-repeat="file in githubCtrl.displayBranchFiles" ng-show="githubCtrl.array"><a href='' ng-click="githubCtrl.getContents(file.url)" >{{file}}</a></p>
+        <p ng-repeat="file in githubCtrl.displayBranchFolders" ng-show="githubCtrl.array"><a href='' ng-click="githubCtrl.getContents(file.url)" >{{file}}</a></p>
         <p ng-show="!githubCtrl.array">{{githubCtrl.displayBranchFiles}}</p>
       </section>
     </section>

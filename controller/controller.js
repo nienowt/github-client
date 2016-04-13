@@ -9,6 +9,7 @@
     this.starred;
     this.branches;
     this.branchContents;
+    this.displayBranchFolders;
     this.displayBranchFiles;
     this.array;
 
@@ -62,10 +63,10 @@
       .then((res) => {
         console.log(res.data)
         if (res.data.tree){
-          this.array = true;
-          return this.displayBranchFiles = res.data.tree;
+          this.array = !this.array;
+          return this.displayBranchFolders = res.data.tree;
         } else {
-          this.array = false;
+          this.array = !this.array;
           var unencoded = atob(res.data.content);
           console.log(unencoded)
           return this.displayBranchFiles = unencoded;  ///if res.data.tree -- = res.data.tree    else = res.data.content(unencoded)
