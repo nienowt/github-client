@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+  </head>
+  <body class="twelve columns">
+    <header>
+      <h1>GutHub</h1>
+    </header>
+    <div id="underHeader">
+    </div>
+    <main class="offset-by-two eight columns">
+
+    <section ng-init="githubCtrl.getUser()" data-ng-controller="GithubController as githubCtrl">
+      {{'test'}}
+      <section id='userInfo' class="two columns">
+        <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
+        <h3>{{githubCtrl.userData.login}}</h3>
+        <p>Followers: {{githubCtrl.userData.followers}}
+           Following: {{githubCtrl.userData.following}}
+           Starred: {{githubCtrl.starred.length}}</p>
+      </section>
+      <section id="repoList" ng-init="githubCtrl.getRepos()">
+        <ul>
+          <li ng-repeat="repo in githubCtrl.repoData"><a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url)">{{repo.full_name}}</a></li>
+        </ul>
+      </section>
+      <section id="singleRepo">
+        <p> Name: {{githubCtrl.oneRepoData.name}}</p>
+        <p ng-repeat="branch in githubCtrl.branches"><a href='' ng-click="githubCtrl.getBranchContents(branch.name)">{{branch.name}}</a></p>
+        <p ng-repeat="content in githubCtrl.branchContents"><a href='{{content}}' >{{content.path}}</a></p>
+      </section>
+    </section>
+    </main>
+    <script src="./node_modules/angular/angular.js"></script> -->
+    <script src="./controller/controller.js"></script>
+  </body>
+</html>
