@@ -66,7 +66,9 @@
           return this.displayBranchFiles = res.data.tree;
         } else {
           this.array = false;
-          return this.displayBranchFiles = res.data;  ///if res.data.tree -- = res.data.tree    else = res.data.content(unencoded)
+          var unencoded = atob(res.data.content);
+          console.log(unencoded)
+          return this.displayBranchFiles = unencoded;  ///if res.data.tree -- = res.data.tree    else = res.data.content(unencoded)
         }
       })
     }
