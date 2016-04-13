@@ -9,6 +9,8 @@
     this.starred;
     this.branches;
     this.branchContents;
+    this.displayBranchFiles;
+    this.array;
 
     this.getRepos = function(){
       $http.get('https://api.github.com/users/nienowt/repos')
@@ -49,13 +51,23 @@
     }
 
     this.getBranchContents = function(sha) {
-      $http.get('https://api.github.com/repos/nienowt/301_portfolio/branches/' + sha)
+      $http.get('https://api.github.com/repos/nienowt/' + sha + '/contents')
       .then((res) =>{
         console.log(res)
-        $http.get(res.data.commit.commit.tree.url)  ///probably shouldnt do this
-        .then((res) => {
-          this.branchContents = res.data.tree;
-        })
+        this.branchContents = res.data;
+      })
+    }
+    this.getContents = function(url){
+      $http.get(url)
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.tree){
+          this.array = true;
+          return this.displayBranchFiles = res.data.tree;
+        } else {
+          this.array = false;
+          return this.displayBranchFiles = res.data;  ///if res.data.tree -- = res.data.tree    else = res.data.content(unencoded)
+        }
       })
     }
   }])
