@@ -2,6 +2,22 @@
 
 
   angular.module('app', [])
+  .controller('TabController', function() {
+    this.tab = 'repos';
+    this.subTab = 'branches';
+    this.setTab = function(tab){
+      this.tab = tab;
+    }
+    this.setSubTab = function(tab){
+      this.subTab = tab;
+    }
+    this.activeTab = function(tab){
+      return this.tab == tab;
+    }
+    this.activeSubTab = function(tab){
+      return this.subTab == tab;
+    }
+  })
   .controller('GithubController', ['$http', function($http){
     this.OneRepoData;
     this.repoData;
@@ -55,6 +71,7 @@
       $http.get('https://api.github.com/repos/nienowt/' + sha + '/contents')
       .then((res) =>{
         console.log(res)
+        this.currentBranch = res.data[0].url.split('=')[1];
         this.branchContents = res.data;
       })
     }
@@ -63,13 +80,13 @@
       .then((res) => {
         console.log(res.data)
         if (res.data.tree){
-          this.array = !this.array;
+          this.array = true;
           return this.displayBranchFolders = res.data.tree;
         } else {
-          this.array = !this.array;
+          this.array = false;
           var unencoded = atob(res.data.content);
           console.log(unencoded)
-          return this.displayBranchFiles = unencoded;  ///if res.data.tree -- = res.data.tree    else = res.data.content(unencoded)
+          return this.displayBranchFiles = unencoded; 
         }
       })
     }

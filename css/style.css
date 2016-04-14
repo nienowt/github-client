@@ -3,33 +3,50 @@
 }
 
 #userInfo {
-  border: 1px solid black;
-  /*width:15%;*/
+  min-width: 140px;
+  /*float:left;*/
   padding: 1%;
   border-radius:2px;
 }
 #underHeader {
-  border-bottom:solid 1px;
+  border-bottom:solid #E8E8E8 3px;
   width:100%;
-  height: 35px;
+  height: 225px;
 }
 
-#singleRepo p {
-  border:solid 1px;
+#singleRepo {
+  /*display:block;*/
+  border-bottom:solid 1px;
   padding 2px;
 }
 
+#repoList a{
+  text-decoration: none;
+  font-size: 2em;
+  color: #565656;
+}
+
+#repoList p{
+  border-bottom:solid #eee 1px;
+}
+
+#repoList {
+  margin-top:25px;
+}
+
 header {
-  padding-top:50px;
+  padding-top:30px;
   padding-right:50px;
-  border-bottom:solid black 1px;
-  background:grey;
+  border-bottom:solid #E6E6E6 3px;
+  background:#EDEDED;
 }
 
 body {
+  background:#fff
   width:100%;
   margin:0%;
 }
+
 
 /*main{
   margin-left:15%;
