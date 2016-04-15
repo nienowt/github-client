@@ -10,23 +10,25 @@
 
       <section ng-init="githubCtrl.getUser()" data-ng-controller="GithubController as githubCtrl">
         <header>
-          <h1><a href='' ng-click="tabCtrl.setTab('repos'); tabCtrl.setSubTab('branches');githubCtrl.currentBranch = null">GutHub</a></h1>
+          <h1><a href='' ng-click="tabCtrl.setTab('repos'); tabCtrl.setSubTab('branches'); githubCtrl.currentBranch = null">GutHub</a></h1>
         </header>
         <main class="offset-by-two eight columns">
-        <div id="underHeader">
-          <section id='userInfo' class="six columns">
+        <div class="twelve columns" id="underHeader">
+          <section id='userInfo' class="twelve columns">
             <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
-            <h3>{{githubCtrl.userData.login}}</h3>
-            <p>Followers: {{githubCtrl.userData.followers}}
-              Following: {{githubCtrl.userData.following}}
-              Starred: {{githubCtrl.starred.length}}</p>
+            <div id="info">
+              <h3>{{githubCtrl.userData.login}}</h3>
+              <p>Followers: {{githubCtrl.userData.followers}}
+                Following: {{githubCtrl.userData.following}}
+                Starred: {{githubCtrl.starred.length}}</p>
+            </div>
             </section>
         </div>
         <section id="repoList" ng-init="githubCtrl.getRepos()" ng-show="tabCtrl.activeTab('repos')">
             <p ng-repeat="repo in githubCtrl.repoData"><a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url); tabCtrl.setTab('singleRepo')">{{repo.full_name | uppercase}}</a></p>
         </section>
 
-        <section id="singleRepo" class="eight columns" ng-show="tabCtrl.activeTab('singleRepo')">
+        <section id="singleRepo" ng-show="tabCtrl.activeTab('singleRepo')">
           <p> Position: {{githubCtrl.oneRepoData.name}}/{{githubCtrl.currentBranch || 'branches'}}</p>
           <section ng-show="tabCtrl.activeSubTab('branches')">
 
@@ -35,7 +37,7 @@
           <p ng-repeat="content in githubCtrl.branchContents" ng-show="tabCtrl.activeSubTab('branchContents')"><a href='' ng-click="githubCtrl.getContents(content.git_url); tabCtrl.setSubTab('files')" >{{content.name}}</a></p>
           <section ng-show="tabCtrl.activeSubTab('files')">
             <p ng-repeat="file in githubCtrl.displayBranchFolders" ng-show="githubCtrl.array"><a href='' ng-click="githubCtrl.getContents(file.url)" >{{file.path}}</a></p>
-            <p ng-show="!githubCtrl.array"><pre><code>{{githubCtrl.displayBranchFiles}}</code></pre></p>
+            <p><pre><code ng-show="!githubCtrl.array" id="codeDisplay">{{githubCtrl.displayBranchFiles}}</code></pre></p>
           </section>
         </section>
       </section>

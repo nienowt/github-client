@@ -73,6 +73,7 @@
         console.log(res)
         this.currentBranch = res.data[0].url.split('=')[1];
         this.branchContents = res.data;
+        return this.array = true;
       })
     }
     this.getContents = function(url){
