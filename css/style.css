@@ -34,6 +34,14 @@
   margin-top:25px;
 }
 
+header a {
+  text-decoration: none;
+  color:#333;
+}
+
+header a:hover {
+  color:#333;
+}
 header {
   padding-top:30px;
   padding-right:50px;

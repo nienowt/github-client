@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="./css/skeleton.css">
   </head>
   <body class="twelve columns" ng-controller="TabController as tabCtrl">
-    <header>
-      <h1>GutHub</h1>
-    </header>
-    <main class="offset-by-two eight columns">
 
       <section ng-init="githubCtrl.getUser()" data-ng-controller="GithubController as githubCtrl">
+        <header>
+          <h1><a href='' ng-click="tabCtrl.setTab('repos'); tabCtrl.setSubTab('branches');githubCtrl.currentBranch = null">GutHub</a></h1>
+        </header>
+        <main class="offset-by-two eight columns">
         <div id="underHeader">
           <section id='userInfo' class="six columns">
             <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
@@ -35,7 +35,7 @@
           <p ng-repeat="content in githubCtrl.branchContents" ng-show="tabCtrl.activeSubTab('branchContents')"><a href='' ng-click="githubCtrl.getContents(content.git_url); tabCtrl.setSubTab('files')" >{{content.name}}</a></p>
           <section ng-show="tabCtrl.activeSubTab('files')">
             <p ng-repeat="file in githubCtrl.displayBranchFolders" ng-show="githubCtrl.array"><a href='' ng-click="githubCtrl.getContents(file.url)" >{{file.path}}</a></p>
-            <p ng-show="!githubCtrl.array">{{githubCtrl.displayBranchFiles}}</p>
+            <p ng-show="!githubCtrl.array"><pre><code>{{githubCtrl.displayBranchFiles}}</code></pre></p>
           </section>
         </section>
       </section>

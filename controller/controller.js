@@ -86,7 +86,7 @@
           this.array = false;
           var unencoded = atob(res.data.content);
           console.log(unencoded)
-          return this.displayBranchFiles = unencoded; 
+          return this.displayBranchFiles = unencoded;
         }
       })
     }
