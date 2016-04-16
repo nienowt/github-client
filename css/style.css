@@ -27,12 +27,13 @@
 
 #singleRepo {
   /*display:block;*/
-  border-bottom:solid 1px;
-  padding 2px;
+  border-bottom:solid #E8E8E8 1px;
+  padding: 2px;
+  margin-top:50px;
 }
 
 #repoList a{
-  text-decoration: none;
+  /*text-decoration: none;*/
   font-size: 2em;
   color: #565656;
 }
@@ -51,8 +52,21 @@
   margin-left:1%;
 }
 
+#searchButton{
+    display: inline-block;
+    float:right;
+}
+
+#singleRepo h5 a{
+  display:inline-block;
+}
+header h1 {
+  display:inline-block;
+}
+
 header a {
-  text-decoration: none;
+  /*text-decoration: none;*/
+  display:inline-block;
   color:#333;
 }
 
@@ -70,6 +84,10 @@ body {
   background:#fff
   width:100%;
   margin:0%;
+}
+
+a {
+  text-decoration: none;
 }
 
 

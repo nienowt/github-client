@@ -28,16 +28,28 @@
     this.displayBranchFolders;
     this.displayBranchFiles;
     this.array;
+    this.search;
+    this.searchResults;
 
-    this.getRepos = function(){
-      $http.get('https://api.github.com/users/nienowt/repos')
+    this.findUser = function(user){
+      $http.get('https://api.github.com/search/users?q=' + user.toLowerCase())
+      .then((res) => {
+        this.searchResults = res.data.items;
+        this.search = '';
+      })
+    }
+
+    this.getRepos = function(url){
+      $http.get(url || 'https://api.github.com/users/nienowt/repos')
       .then((res) => {
         this.repoData = res.data;
         console.log(res)
+        this.getUser()
+        // this.userData = this.repoData[0].owner;
       })
     }
     this.getUser = function(){
-      $http.get('https://api.github.com/users/nienowt')
+      $http.get(this.repoData[0].owner.url || 'https://api.github.com/users/nienowt')
       .then((res) => {
         console.log(res.data)
         console.log(res)
@@ -62,18 +74,24 @@
     this.getBranches = function(branchesUrl){
       $http.get(branchesUrl.split('{')[0])
       .then((res)=>{
+        console.log(branchesUrl)
         this.branches = res.data;
+        console.log(this.branches)
         console.log(res)
       });
     }
 
     this.getBranchContents = function(sha) {
-      $http.get('https://api.github.com/repos/nienowt/' + sha + '/contents')
+      $http.get(sha.commit.url)
       .then((res) =>{
-        console.log(res)
-        this.currentBranch = res.data[0].url.split('=')[1];
-        this.branchContents = res.data;
-        return this.array = true;
+        $http.get(res.data.commit.tree.url)
+        .then((res)=> {
+          console.log(res)
+          console.log(this.oneRepoData)
+          this.branchContents = res.data;
+          console.log('commitdata',this.branchContents)
+          return this.array = true;
+        })
       })
     }
     this.getContents = function(url){
