@@ -3,20 +3,35 @@
 
   angular.module('app', [])
   .controller('TabController', function() {
-    this.tab = 'repos';
-    this.subTab = 'branches';
-    this.setTab = function(tab){
-      this.tab = tab;
+    this.tabs = {
+      tab: 'repos',
+      subTab: 'branches',
+      pathTab: ''
     }
-    this.setSubTab = function(tab){
-      this.subTab = tab;
+    // this.tab = 'repos';
+    // this.subTab = 'branches';
+    // this.pathTab;
+
+    this.set = function(tab, level){
+      this.tabs[level] = tab;
     }
-    this.activeTab = function(tab){
-      return this.tab == tab;
+
+    this.active = function(tab, level){
+      return this.tabs[level] == tab;
     }
-    this.activeSubTab = function(tab){
-      return this.subTab == tab;
-    }
+
+    // this.setTab = function(tab){
+    //   this.tab = tab;
+    // }
+    // this.setSubTab = function(tab){
+    //   this.subTab = tab;
+    // }
+    // this.activeTab = function(tab){
+    //   return this.tab == tab;
+    // }
+    // this.activeSubTab = function(tab){
+    //   return this.subTab == tab;
+    // }
   })
   .controller('GithubController', ['$http', function($http){
     this.array;
@@ -27,6 +42,7 @@
     this.displayBranchFolders;
     this.displayBranchFiles;
     this.OneRepoData;
+    this.pathData = {};
     this.repoData;
     this.search;
     this.searchResults;
@@ -103,8 +119,19 @@
         })
       })
     }
-    this.what = function(){
+
+    this.returnPathContents = function(path){
       console.log(this.diplayBranchFolders)
+      this.displayBranchFolders = this.pathData[path]
+      this.branchPaths = this.branchPaths.slice(0, (this.branchPaths.indexOf(path)) + 1);
+    }
+    this.reset = function(){
+      this.displayBranchFolders = null;
+      this.branchPaths = [];
+      this. displayBranchFiles = null;
+      this.branches = null;
+      this.currentBranch = null;
+      this.branchContents = null;
     }
     this.getContents = function(content){
       $http.get(content.url)
@@ -114,6 +141,7 @@
         console.log(res.data)
         if (res.data.tree){
           this.array = true;
+          this.pathData[content.path] = res.data.tree;
           return this.displayBranchFolders = res.data.tree;
         } else {
           this.array = false;

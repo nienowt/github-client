@@ -10,14 +10,14 @@
 
       <section ng-init="githubCtrl.getUser()" data-ng-controller="GithubController as githubCtrl">
         <header>
-          <h1><a href='' ng-click="tabCtrl.setTab('repos'); tabCtrl.setSubTab('branches'); githubCtrl.currentBranch = null">GutHub</a></h1>
+          <h1><a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches','subTab'); githubCtrl.currentBranch = null">GutHub</a></h1>
           <form id="searchButton">
             <input type="text" ng-model="githubCtrl.search" value="">
-            <button ng-click="githubCtrl.findUser(githubCtrl.search); tabCtrl.setTab('search')">Search</button>
+            <button ng-click="githubCtrl.findUser(githubCtrl.search); tabCtrl.set('search', 'tab')">Search</button>
           </form>
         </header>
         <main class="offset-by-two eight columns">
-        <div class="twelve columns" id="underHeader" ng-show="tabCtrl.activeTab('repos')">
+        <div class="twelve columns" id="underHeader" ng-show="tabCtrl.active('repos', 'tab')">
           <section id='userInfo' class="twelve columns" ng-show="githubCtrl.userData">
             <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
             <div id="info">
@@ -28,45 +28,44 @@
             </div>
             </section>
         </div>
-        <section id="searchResults" ng-show="tabCtrl.activeTab('search')">
+        <section id="searchResults" ng-show="tabCtrl.active('search', 'tab')">
           <p ng-repeat="result in githubCtrl.searchResults">
-            <a href='' ng-click="githubCtrl.getRepos(result.repos_url); tabCtrl.setTab('repos')">{{result.login}}
+            <a href='' ng-click="githubCtrl.getRepos(result.repos_url); tabCtrl.set('repos', 'tab')">{{result.login}}
           </p>
         </section>
-        <section id="repoList" ng-init="githubCtrl.getRepos()" ng-show="tabCtrl.activeTab('repos')">
+        <section id="repoList" ng-init="githubCtrl.getRepos()" ng-show="tabCtrl.active('repos', 'tab')">
             <p ng-repeat="repo in githubCtrl.repoData">
-              <a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url); tabCtrl.setTab('singleRepo')">
+              <a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url); tabCtrl.set('singleRepo', 'tab')">
                 {{repo.full_name | uppercase}}
               </a>
             </p>
         </section>
 
-        <section id="singleRepo" ng-show="tabCtrl.activeTab('singleRepo')">
+        <section id="singleRepo" ng-show="tabCtrl.active('singleRepo', 'tab')">
           <h5>
-            /<a href='' ng-click="tabCtrl.setTab('repos'); this.setSubTab('branches'); githubCtrl.branchContents=null">{{githubCtrl.userData.login}}</a>
-            /<a href='' ng-click="tabCtrl.setSubTab('branches'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name}}</a>
-            /<a href='' ng-show="!tabCtrl.activeSubTab('branches')" ng-click="tabCtrl.setSubTab('branchContents'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch}}</a>
-            <p ng-repeat="path in githubCtrl.branchPaths">/
-              <a href='' ng-show="tabCtrl.activeSubTab('files')" ng-click="githubCtrl.array = true; githubCtrl.what()">
-                {{path}} <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
+            / <a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches', 'subTab'); githubCtrl.reset()">{{githubCtrl.userData.login}}</a>
+            / <a href='' ng-click="tabCtrl.set('branches', 'subTab'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name}}</a> 
+            / <a href='' ng-show="!tabCtrl.active('branches', 'subTab')" ng-click="tabCtrl.set('branchContents', 'subTab'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch}}</a>
+            <p ng-repeat="path in githubCtrl.branchPaths"> /
+              <a href='' ng-click="githubCtrl.array = true; githubCtrl.returnPathContents(path);">{{path}}  <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
               </a>
             </p>
           </h5>
 
-          <section ng-show="tabCtrl.activeSubTab('branches')">
+          <section ng-show="tabCtrl.active('branches', 'subTab')">
             Branches:
             <p ng-repeat="branch in githubCtrl.branches">
-              <a href='' ng-click="githubCtrl.getBranchContents(branch); tabCtrl.setSubTab('branchContents')">
+              <a href='' ng-click="githubCtrl.getBranchContents(branch); tabCtrl.set('branchContents', 'subTab')">
                 {{branch.name}}
               </a>
             </p>
           </section>
-          <p ng-repeat="content in githubCtrl.branchContents.tree" ng-show="tabCtrl.activeSubTab('branchContents')">
-            <a href='' ng-click="githubCtrl.getContents(content); tabCtrl.setSubTab('files')" >
+          <p ng-repeat="content in githubCtrl.branchContents.tree" ng-show="tabCtrl.active('branchContents', 'subTab')">
+            <a href='' ng-click="githubCtrl.getContents(content); tabCtrl.set('files', 'subTab')" >
               {{content.path}}
             </a>
           </p>
-          <section ng-show="tabCtrl.activeSubTab('files')">
+          <section ng-show="tabCtrl.active('files', 'subTab')">
             <p ng-repeat="file in githubCtrl.displayBranchFolders" ng-show="githubCtrl.array">
               <a href='' ng-click="githubCtrl.getContents(file)">
                 {{file.path}}
