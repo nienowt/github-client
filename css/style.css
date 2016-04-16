@@ -57,9 +57,14 @@
     float:right;
 }
 
-#singleRepo h5 a{
+#singleRepo h5 a {
   display:inline-block;
 }
+
+#singleRepo h5 p {
+  display:inline-block;
+}
+
 header h1 {
   display:inline-block;
 }
@@ -88,6 +93,7 @@ body {
 
 a {
   text-decoration: none;
+  color: #565656;
 }
 
 

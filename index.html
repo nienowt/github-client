@@ -18,7 +18,7 @@
         </header>
         <main class="offset-by-two eight columns">
         <div class="twelve columns" id="underHeader" ng-show="tabCtrl.activeTab('repos')">
-          <section id='userInfo' class="twelve columns">
+          <section id='userInfo' class="twelve columns" ng-show="githubCtrl.userData">
             <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
             <div id="info">
               <h3>{{githubCtrl.userData.login}}</h3>
@@ -43,9 +43,14 @@
 
         <section id="singleRepo" ng-show="tabCtrl.activeTab('singleRepo')">
           <h5>
-            /<a href='' ng-click="tabCtrl.setTab('repos')">{{githubCtrl.userData.login}}</a>
-            /<a href='' ng-click="tabCtrl.setSubTab('branches')">{{githubCtrl.oneRepoData.name}}</a>
-            /<a href='' ng-show="!tabCtrl.activeSubTab('branches')" ng-click="tabCtrl.setSubTab('branchContents')">{{githubCtrl.currentBranch}}</a>
+            /<a href='' ng-click="tabCtrl.setTab('repos'); this.setSubTab('branches'); githubCtrl.branchContents=null">{{githubCtrl.userData.login}}</a>
+            /<a href='' ng-click="tabCtrl.setSubTab('branches'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name}}</a>
+            /<a href='' ng-show="!tabCtrl.activeSubTab('branches')" ng-click="tabCtrl.setSubTab('branchContents'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch}}</a>
+            <p ng-repeat="path in githubCtrl.branchPaths">/
+              <a href='' ng-show="tabCtrl.activeSubTab('files')" ng-click="githubCtrl.array = true; githubCtrl.what()">
+                {{path}} <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
+              </a>
+            </p>
           </h5>
 
           <section ng-show="tabCtrl.activeSubTab('branches')">
@@ -57,13 +62,13 @@
             </p>
           </section>
           <p ng-repeat="content in githubCtrl.branchContents.tree" ng-show="tabCtrl.activeSubTab('branchContents')">
-            <a href='' ng-click="githubCtrl.getContents(content.url); tabCtrl.setSubTab('files')" >
+            <a href='' ng-click="githubCtrl.getContents(content); tabCtrl.setSubTab('files')" >
               {{content.path}}
             </a>
           </p>
           <section ng-show="tabCtrl.activeSubTab('files')">
             <p ng-repeat="file in githubCtrl.displayBranchFolders" ng-show="githubCtrl.array">
-              <a href='' ng-click="githubCtrl.getContents(file.url)">
+              <a href='' ng-click="githubCtrl.getContents(file)">
                 {{file.path}}
               </a>
             </p>

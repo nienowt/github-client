@@ -19,50 +19,56 @@
     }
   })
   .controller('GithubController', ['$http', function($http){
-    this.OneRepoData;
-    this.repoData;
-    this.userData;
-    this.starred;
+    this.array;
     this.branches;
     this.branchContents;
+    this.branchPaths = [];
+    this.currentBranch;
     this.displayBranchFolders;
     this.displayBranchFiles;
-    this.array;
+    this.OneRepoData;
+    this.repoData;
     this.search;
     this.searchResults;
+    this.starred;
+    this.userData;
+    this.showPaths;
 
     this.findUser = function(user){
+      this.searchResults = null;
       $http.get('https://api.github.com/search/users?q=' + user.toLowerCase())
       .then((res) => {
         this.searchResults = res.data.items;
         this.search = '';
-      })
+        this.userData = null;
+        this.repoData = null;
+      });
     }
 
     this.getRepos = function(url){
       $http.get(url || 'https://api.github.com/users/nienowt/repos')
       .then((res) => {
         this.repoData = res.data;
-        console.log(res)
-        this.getUser()
+        console.log(res);
+        if(this.repoData[0]) this.getUser(this.repoData[0].owner.url);
         // this.userData = this.repoData[0].owner;
-      })
+      });
     }
-    this.getUser = function(){
-      $http.get(this.repoData[0].owner.url || 'https://api.github.com/users/nienowt')
+    this.getUser = function(user){
+      $http.get(user || 'https://api.github.com/users/nienowt')
       .then((res) => {
-        console.log(res.data)
-        console.log(res)
+        console.log(res.data);
+        console.log(res);
         this.userData = res.data;
         this.getStarred();
-      })
+      });
     }
     this.getStarred = function(){
       $http.get('https://api.github.com/users/nienowt/starred')
       .then((res) => {
-        console.log(res)
+        console.log(res);
         this.starred = res.data;
-      })
+      });
     }
     this.getRepo = function(repoUrl){
       $http.get(repoUrl)
@@ -81,22 +87,30 @@
       });
     }
 
-    this.getBranchContents = function(sha) {
-      $http.get(sha.commit.url)
+    this.getBranchContents = function(branch) {
+      this.branchContents = null;
+      this.displayBranchFolders = null;
+      $http.get(branch.commit.url)
       .then((res) =>{
+        this.currentBranch = branch.name;
         $http.get(res.data.commit.tree.url)
         .then((res)=> {
-          console.log(res)
-          console.log(this.oneRepoData)
+          console.log(res);
+          console.log(this.oneRepoData);
           this.branchContents = res.data;
-          console.log('commitdata',this.branchContents)
+          console.log('commitdata',this.branchContents);
           return this.array = true;
         })
       })
     }
-    this.getContents = function(url){
-      $http.get(url)
+    this.what = function(){
+      console.log(this.diplayBranchFolders)
+    }
+    this.getContents = function(content){
+      $http.get(content.url)
       .then((res) => {
+        this.showPaths = true;
+        this.branchPaths.push(content.path);
         console.log(res.data)
         if (res.data.tree){
           this.array = true;
