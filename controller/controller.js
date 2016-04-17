@@ -1,6 +1,5 @@
 (function(){
 
-
   angular.module('app', [])
   .controller('TabController', function() {
     this.tabs = {
@@ -46,10 +45,18 @@
     this.repoData;
     this.search;
     this.searchResults;
+    this.showPaths;
     this.starred;
     this.userData;
-    this.showPaths;
 
+    this.reset = function(){
+      this.branches = null;
+      this.branchPaths = [];
+      this.branchContents = null;
+      this.currentBranch = null;
+      this.displayBranchFolders = null;
+      this.displayBranchFiles = null;
+    }
     this.findUser = function(user){
       this.searchResults = null;
       $http.get('https://api.github.com/search/users?q=' + user.toLowerCase())
@@ -60,14 +67,12 @@
         this.repoData = null;
       });
     }
-
     this.getRepos = function(url){
       $http.get(url || 'https://api.github.com/users/nienowt/repos')
       .then((res) => {
         this.repoData = res.data;
         console.log(res);
         if(this.repoData[0]) this.getUser(this.repoData[0].owner.url);
-        // this.userData = this.repoData[0].owner;
       });
     }
     this.getUser = function(user){
@@ -102,7 +107,6 @@
         console.log(res)
       });
     }
-
     this.getBranchContents = function(branch) {
       this.branchContents = null;
       this.displayBranchFolders = null;
@@ -119,19 +123,10 @@
         })
       })
     }
-
     this.returnPathContents = function(path){
       console.log(this.diplayBranchFolders)
       this.displayBranchFolders = this.pathData[path]
       this.branchPaths = this.branchPaths.slice(0, (this.branchPaths.indexOf(path)) + 1);
-    }
-    this.reset = function(){
-      this.displayBranchFolders = null;
-      this.branchPaths = [];
-      this. displayBranchFiles = null;
-      this.branches = null;
-      this.currentBranch = null;
-      this.branchContents = null;
     }
     this.getContents = function(content){
       $http.get(content.url)

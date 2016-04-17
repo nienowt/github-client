@@ -31,15 +31,38 @@
   padding: 2px;
   margin-top:50px;
 }
+/*#singleRepo h5 a {
+}*/
 
-#repoList a{
+#singleRepo h5 p {
+  display:inline-block;
+}
+
+#singleRepo h5 a, #path {
+  display:inline-block;
+  font-size: 1em;
+  color:#559AFF;
+  padding:0%;
+}
+
+#repoList a, #singleRepo a {
   /*text-decoration: none;*/
   font-size: 2em;
   color: #565656;
+  padding: 4% 0% 0% 5%;
+  margin-bottom: 0em;
 }
 
-#repoList p{
+#repoList p, #singleRepoList p{
   border-bottom:solid #eee 1px;
+  padding: 2% 0% 2% 0%;
+  margin-bottom: 0em;
+}
+
+#repoList p:hover, #singleRepoList p:hover {
+  -webkit-box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
+  -moz-box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
+  box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
 }
 
 #repoList {
@@ -57,13 +80,6 @@
     float:right;
 }
 
-#singleRepo h5 a {
-  display:inline-block;
-}
-
-#singleRepo h5 p {
-  display:inline-block;
-}
 
 header h1 {
   display:inline-block;
@@ -82,7 +98,7 @@ header {
   padding-top:30px;
   padding-right:50px;
   border-bottom:solid #E6E6E6 3px;
-  background:#EDEDED;
+  background:#DDE8FF;
 }
 
 body {

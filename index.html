@@ -36,23 +36,23 @@
         <section id="repoList" ng-init="githubCtrl.getRepos()" ng-show="tabCtrl.active('repos', 'tab')">
             <p ng-repeat="repo in githubCtrl.repoData">
               <a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url); tabCtrl.set('singleRepo', 'tab')">
-                {{repo.full_name | uppercase}}
+                {{repo.name | uppercase}}
               </a>
             </p>
         </section>
 
         <section id="singleRepo" ng-show="tabCtrl.active('singleRepo', 'tab')">
           <h5>
-            / <a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches', 'subTab'); githubCtrl.reset()">{{githubCtrl.userData.login}}</a>
-            / <a href='' ng-click="tabCtrl.set('branches', 'subTab'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name}}</a>
-            / <a href='' ng-show="!tabCtrl.active('branches', 'subTab')" ng-click="tabCtrl.set('branchContents', 'subTab'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch}}</a>
-            <p ng-repeat="path in githubCtrl.branchPaths"> /
-              <a href='' ng-click="githubCtrl.array = true; githubCtrl.returnPathContents(path);">{{path}}  <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
+            <a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches', 'subTab'); githubCtrl.reset()">{{'/' + githubCtrl.userData.login}}</a>
+            <a href='' ng-click="tabCtrl.set('branches', 'subTab'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name = '/'}}</a>
+            <a href='' ng-show="!tabCtrl.active('branches', 'subTab')" ng-click="tabCtrl.set('branchContents', 'subTab'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch + '/'}}</a>
+            <p ng-repeat="path in githubCtrl.branchPaths">
+              <a id="path" href='' ng-click="githubCtrl.array = true; githubCtrl.returnPathContents(path);">{{path + '/'}}  <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
               </a>
             </p>
           </h5>
 
-          <section ng-show="tabCtrl.active('branches', 'subTab')">
+          <section id="singleRepoList" ng-show="tabCtrl.active('branches', 'subTab')">
             Branches:
             <p ng-repeat="branch in githubCtrl.branches">
               <a href='' ng-click="githubCtrl.getBranchContents(branch); tabCtrl.set('branchContents', 'subTab')">
