@@ -7,30 +7,13 @@
       subTab: 'branches',
       pathTab: ''
     }
-    // this.tab = 'repos';
-    // this.subTab = 'branches';
-    // this.pathTab;
-
     this.set = function(tab, level){
       this.tabs[level] = tab;
     }
-
     this.active = function(tab, level){
       return this.tabs[level] == tab;
     }
 
-    // this.setTab = function(tab){
-    //   this.tab = tab;
-    // }
-    // this.setSubTab = function(tab){
-    //   this.subTab = tab;
-    // }
-    // this.activeTab = function(tab){
-    //   return this.tab == tab;
-    // }
-    // this.activeSubTab = function(tab){
-    //   return this.subTab == tab;
-    // }
   })
   .controller('GithubController', ['$http', function($http){
     this.array;
@@ -48,6 +31,7 @@
     this.showPaths;
     this.starred;
     this.userData;
+    this.followArray;
 
     this.reset = function(){
       this.branches = null;
@@ -56,6 +40,22 @@
       this.currentBranch = null;
       this.displayBranchFolders = null;
       this.displayBranchFiles = null;
+    }
+    this.getFollowers = function(){
+      console.log(this.userData.followers_url)
+      $http.get(this.userData.followers_url)
+      .then((res) => {
+        console.log(res.data)
+        this.followArray = res.data;
+      })
+    }
+    this.getFollowing = function(){
+      console.log(this.userData.following_url)
+      $http.get(this.userData.following_url.split('{')[0])
+      .then((res) => {
+        console.log(res.data)
+        this.followArray = res.data;
+      })
     }
     this.findUser = function(user){
       this.searchResults = null;
@@ -68,11 +68,14 @@
       });
     }
     this.getRepos = function(url){
+      console.log(url)
       $http.get(url || 'https://api.github.com/users/nienowt/repos')
       .then((res) => {
         this.repoData = res.data;
         console.log(res);
-        if(this.repoData[0]) this.getUser(this.repoData[0].owner.url);
+        console.log(this.repoData[0])
+        if(this.repoData[0]) return this.getUser(this.repoData[0].owner.url);
+        if(this.repoData) getUser(this.repoData.url)
       });
     }
     this.getUser = function(user){
@@ -81,11 +84,11 @@
         console.log(res.data);
         console.log(res);
         this.userData = res.data;
-        this.getStarred();
+        this.getStarred(res.data.starred_url.split('{')[0]);
       });
     }
-    this.getStarred = function(){
-      $http.get('https://api.github.com/users/nienowt/starred')
+    this.getStarred = function(url){
+      $http.get(url)
       .then((res) => {
         console.log(res);
         this.starred = res.data;

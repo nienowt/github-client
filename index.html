@@ -22,17 +22,35 @@
             <img id="avatar" ng-src={{githubCtrl.userData.avatar_url}}/>
             <div id="info">
               <h3>{{githubCtrl.userData.login}}</h3>
-              <p>Followers: {{githubCtrl.userData.followers}}
-                Following: {{githubCtrl.userData.following}}
-                Starred: {{githubCtrl.starred.length}}</p>
+              <p>
+                <a href='' ng-click="githubCtrl.getFollowers(); tabCtrl.set('follow', 'tab')">Followers: {{githubCtrl.userData.followers}}</a>
+                <a href='' ng-click="githubCtrl.getFollowing(); tabCtrl.set('follow', 'tab')">Following: {{githubCtrl.userData.following}}</a>
+                <a href='' ng-click="tabCtrl.set('stars', 'tab')">Starred: {{githubCtrl.starred.length}}</a>
+              </p>
             </div>
             </section>
         </div>
-        <section id="searchResults" ng-show="tabCtrl.active('search', 'tab')">
-          <p ng-repeat="result in githubCtrl.searchResults">
-            <a href='' ng-click="githubCtrl.getRepos(result.repos_url); tabCtrl.set('repos', 'tab')">{{result.login}}
+
+        <section id="follow" ng-show="tabCtrl.active('follow', 'tab')">
+          <p ng-repeat="follower in githubCtrl.followArray">
+            <a href='' ng-click="githubCtrl.getRepos(follower.repos_url); tabCtrl.set('repos', 'tab')">{{follower.login}}</a>
           </p>
         </section>
+
+        <section ng-show="tabCtrl.active('stars', 'tab')">
+          <p ng-repeat="star in githubCtrl.starred">
+            {{star.name}}
+          </p>
+        </section>
+
+
+        <section id="searchResults" ng-show="tabCtrl.active('search', 'tab')">
+          <h4>Results: </h4>
+          <p ng-repeat="result in githubCtrl.searchResults">
+            <a href='' ng-click="githubCtrl.getRepos(result.repos_url); tabCtrl.set('repos', 'tab'); githubCtrl.reset()">{{result.login}}</a>
+          </p>
+        </section>
+
         <section id="repoList" ng-init="githubCtrl.getRepos()" ng-show="tabCtrl.active('repos', 'tab')">
             <p ng-repeat="repo in githubCtrl.repoData">
               <a href='' ng-click="githubCtrl.getRepo(repo.url); githubCtrl.getBranches(repo.branches_url); tabCtrl.set('singleRepo', 'tab')">
@@ -43,13 +61,10 @@
 
         <section id="singleRepo" ng-show="tabCtrl.active('singleRepo', 'tab')">
           <h5>
-            <a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches', 'subTab'); githubCtrl.reset()">{{'/' + githubCtrl.userData.login}}</a>
-            <a href='' ng-click="tabCtrl.set('branches', 'subTab'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name = '/'}}</a>
-            <a href='' ng-show="!tabCtrl.active('branches', 'subTab')" ng-click="tabCtrl.set('branchContents', 'subTab'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch + '/'}}</a>
-            <p ng-repeat="path in githubCtrl.branchPaths">
-              <a id="path" href='' ng-click="githubCtrl.array = true; githubCtrl.returnPathContents(path);">{{path + '/'}}  <!--**add a tab feature to show only selected tab/contents if clicked / refactor tabctrl to take two arguments instead of having multiple tab set fucntions-->
-              </a>
-            </p>
+            <a href='' ng-click="tabCtrl.set('repos', 'tab'); tabCtrl.set('branches', 'subTab'); githubCtrl.reset()">{{'/ ' + githubCtrl.userData.login + ' / '}}</a>
+            <a href='' ng-click="tabCtrl.set('branches', 'subTab'); githubCtrl.branchContents=null">{{githubCtrl.oneRepoData.name + ' /'}}</a>
+            <a href='' ng-show="!tabCtrl.active('branches', 'subTab')" ng-click="tabCtrl.set('branchContents', 'subTab'); githubCtrl.branchPaths=[];">{{githubCtrl.currentBranch}} </a>
+            <a ng-repeat="path in githubCtrl.branchPaths" id="path" href='' ng-click="githubCtrl.array = true; githubCtrl.returnPathContents(path);">{{' / ' + path}}</a>
           </h5>
 
           <section id="singleRepoList" ng-show="tabCtrl.active('branches', 'subTab')">
