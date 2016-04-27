@@ -1,4 +1,4 @@
-#avatar {
+/*#avatar {
   width:200px;
   display: inline-block;
 }
@@ -7,28 +7,28 @@
   display:block;
   padding: 1%;
   border-radius:2px;
-}
+}*/
 
-#info {
+/*#info {
   display: inline-block;
   padding-left:3%;
 }
 #info p {
   padding-bottom:20px;
-}
+}*/
 
-#underHeader {
+/*#underHeader {
   border-bottom:solid #E8E8E8 3px;
   height: 255px;
-}
+}*/
 
-#singleRepo {
+/*#singleRepo {
   border-bottom:solid #E8E8E8 1px;
   padding: 2px;
   margin-top:50px;
-}
+}*/
 
-#singleRepo h5 p {
+/*#singleRepo h5 p {
   display:inline-block;
 }
 
@@ -36,16 +36,16 @@
   font-size: 1em;
   color:#559AFF;
   padding:0%;
-}
+}*/
 
-#repoList a, #singleRepo a, #searchResults a, #follow a {
+/*#repoList a, #singleRepo a, #searchResults a, #follow a {
   font-size: 2em;
   color: #565656;
   padding: 4% 0% 0% 5%;
   margin-bottom: 0em;
-}
+}*/
 
-#repoList p, #singleRepoList p, #searchResults p, #follow p{
+/*#repoList p, #singleRepoList p, #searchResults p, #follow p{
   border-bottom:solid #eee 1px;
   padding: 2% 0% 2% 0%;
   margin-bottom: 0em;
@@ -55,53 +55,53 @@
   -webkit-box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
   -moz-box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
   box-shadow: inset 0px 0px 29px -18px rgba(0,0,0,1);
-}
+}*/
 
-#repoList {
+/*#repoList {
   margin-top:25px;
-}
+}*/
 
-#codeDisplay {
+/*#codeDisplay {
   overflow: scroll;
   width:95%;
   margin-left:1%;
 }
 
 #searchButton{
-    display: inline-block;
-    float:right;
-}
+  display: inline-block;
+  float:right;
+}*/
 
-header h1 {
+/*header h1 {
   display:inline-block;
-}
+}*/
 
-header a {
+/*header a {
   display:inline-block;
   color:#333;
 }
 
 header a:hover {
   color:#333;
-}
-header {
+}*/
+/*header {
   padding-top:30px;
   padding-right:50px;
   border-bottom:solid #E6E6E6 3px;
   background:#DDE8FF;
-}
+}*/
 
-body {
-  background:#fff
+/*body {
+  background:#fff;
   width:100%;
   margin:0%;
-}
-
+}*/
+/*
 a {
   text-decoration: none;
   color: #565656;
-}
+}*/
 
-header h1 {
+/*header h1 {
   margin-left:15%;
-}
+}*/

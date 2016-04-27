@@ -1,0 +1,81 @@
+#singleRepoList a, #searchResults a, #follow a, #repoList a {
+  font-size: 2em;
+  color: #565656;
+  padding: 4% 0% 0% 5%;
+  margin-bottom: 0em; }
+
+#singleRepoList p, #searchResults p, #follow p, #repoList p {
+  border-bottom: solid #eee 1px;
+  padding: 2% 0% 2% 0%;
+  margin-bottom: 0em; }
+
+#singleRepoList p:hover, #searchResults p:hover, #follow p:hover, #repoList p:hover {
+  -webkit-box-shadow: inset 0px 0px 29px -18px black;
+  -moz-box-shadow: inset 0px 0px 29px -18px black;
+  box-shadow: inset 0px 0px 29px -18px black; }
+
+#singleRepo h5 a, #path a {
+  font-size: 1em;
+  color: #559AFF;
+  padding: 0%; }
+
+#repoList {
+  margin-top: 25px; }
+
+#singleRepo {
+  border-bottom: solid #E8E8E8 1px;
+  padding: 2px;
+  margin-top: 50px; }
+  #singleRepo h5 p {
+    display: inline-block; }
+
+#info {
+  display: inline-block;
+  padding-left: 3%; }
+  #info p {
+    padding-bottom: 20px; }
+
+#avatar {
+  width: 200px;
+  display: inline-block; }
+
+#userInfo {
+  display: block;
+  padding: 1%;
+  border-radius: 2px; }
+
+#codeDisplay {
+  overflow: scroll;
+  width: 95%;
+  margin-left: 1%; }
+
+#searchButton {
+  display: inline-block;
+  float: right; }
+
+#underHeader {
+  border-bottom: solid #E8E8E8 3px;
+  height: 255px; }
+
+header {
+  padding-top: 30px;
+  padding-right: 50px;
+  border-bottom: solid #E6E6E6 3px;
+  background: #DDE8FF; }
+  header h1 {
+    display: inline-block;
+    margin-left: 15%; }
+  header a {
+    display: inline-block;
+    color: #333; }
+    header a:hover {
+      color: #333; }
+
+body {
+  background: #fff;
+  width: 100%;
+  margin: 0%; }
+
+a {
+  text-decoration: none;
+  color: #565656; }
